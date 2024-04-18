@@ -97,7 +97,6 @@ def prepare_radar_data(radar_data_path, year, noise_threshold, hail_threshold, s
 
                     # Load radar data from file
                     data_png = Image.open(radar_png_day_path + '/' + file)
-                    print('succesfully opened: ' + radar_png_day_path + '/' + file)
                     data_png_numpy = np.array(data_png)
                     df_data = pd.DataFrame(data_png_numpy)
 
@@ -111,7 +110,7 @@ def prepare_radar_data(radar_data_path, year, noise_threshold, hail_threshold, s
                         pixel_y = int(location[1])
                         value = df_data.iloc[pixel_y, pixel_x]
                         extract_data[location_list.index(location)] = value
-
+                    print('test')
                     # Store in dataframe
                     radar_df.loc[len(radar_df)] = extract_data
 
