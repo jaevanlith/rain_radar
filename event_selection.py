@@ -61,7 +61,7 @@ class Event:
         )
 
 
-def select_events_single_station(station, vals, datetime, radar_df, max_no_rain, min_rain_threshold=0.1):
+def select_events_single_station(station, vals, datetime, radar_df, max_no_rain, min_rain_threshold=0.1, temporal_res='6min'):
     '''
     Method to select events per station.
 
@@ -142,10 +142,16 @@ def select_events_single_station(station, vals, datetime, radar_df, max_no_rain,
                             R += rain_vals
 
                             # Check if 6min sampling vs 60min sampling is still correct
-                            if len(reflect_vals) != 10*len(rain_vals):
-                                raise Exception("Radar dataframe should be sampled per 6min and rain gauge dataframe per 60min. \
-                                                Please check if this is the case!\n \
-                                                The problem occured at station: ",  station, ", from: ", start_time, ", until: ", end_time)
+                            if temporal_res == '6min':
+                                if len(reflect_vals) != 10*len(rain_vals):
+                                    raise Exception("Radar dataframe should be sampled per 6min and rain gauge dataframe per 60min. \
+                                                    Please check if this is the case!\n \
+                                                    The problem occured at station: ",  station, ", from: ", start_time, ", until: ", end_time)
+                            elif temporal_res == '60min' or temporal_res == '1H':
+                                if len(reflect_vals) != len(rain_vals):
+                                    raise Exception("Radar dataframe should be sampled per 60min and rain gauge dataframe per 60min. \
+                                                    Please check if this is the case!\n \
+                                                    The problem occured at station: ",  station, ", from: ", start_time, ", until: ", end_time)
                             
                             # Store reflectivity values
                             Z += reflect_vals

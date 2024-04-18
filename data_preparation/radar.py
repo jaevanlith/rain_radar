@@ -7,7 +7,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-def prepare_radar_data(radar_data_path, year, noise_threshold, hail_threshold, save_path, months=None, days=None):
+def prepare_radar_data(radar_data_path, year, noise_threshold, hail_threshold, save_path, months=None, days=None, temporal_res='6min'):
     '''
     Method to load radar data from csv files.
 
@@ -15,6 +15,10 @@ def prepare_radar_data(radar_data_path, year, noise_threshold, hail_threshold, s
     @param year int: Year to analyse the data from.
     @param noise_threshold float: Threshold underneath which is considered noise (in dBZ).
     @param hail_threshold float: Threshold above which is considered hail (in dBZ).
+    @param save_path str: Path to save the radar data to.
+    @param months list: List of months to analyse.
+    @param days list: List of days to analyse.
+    @param temporal_res str: Temporal resolution to resample the data to.
 
     @return df DataFrame: Reflectivity over time for all stations.
     '''
