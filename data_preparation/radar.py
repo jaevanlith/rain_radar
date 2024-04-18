@@ -86,17 +86,22 @@ def prepare_radar_data(radar_data_path, year, noise_threshold, hail_threshold, s
 
             # Loop over all radar files
             for file in filelist:
+                # Get datetime from file name   
+                Year = file[0:4]
+                Month = file[4:6]
+                Day = file[6:8]
+                Hour = file[8:10]
+                Minute = file[10:12]
+
                 # Try to open the png file, otherwise print that it gave issues
                 try:
-                    # Get datetime from file name   
-                    Year = file[0:4]
-                    Month = file[4:6]
-                    Day = file[6:8]
-                    Hour = file[8:10]
-                    Minute = file[10:12]
-
                     # Load radar data from file
                     data_png = Image.open(radar_png_day_path + '/' + file)
+                except:
+                    print("Unable to open: " + radar_png_day_path + '/' + file)
+                    data_png = None
+
+                if data_png is not None:
                     data_png_numpy = np.array(data_png)
                     df_data = pd.DataFrame(data_png_numpy)
 
@@ -117,9 +122,6 @@ def prepare_radar_data(radar_data_path, year, noise_threshold, hail_threshold, s
                     # Format and store datetime
                     Date = Year + "-" + Month + "-" + Day + ' ' + Hour + ':' + Minute
                     DateTime.append(datetime.strptime(Date, "%Y-%m-%d %H:%M"))
-
-                except:
-                    print("Unable to open: " + radar_png_day_path + '/' + file)
 
         # Set datetime as index column
         radar_df.insert(loc=0, column='Datetime', value=DateTime)
