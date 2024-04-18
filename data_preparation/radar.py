@@ -102,7 +102,7 @@ def prepare_radar_data(radar_data_path, year, noise_threshold, hail_threshold, s
 
                     # Init row
                     extract_data = np.arange(len(location_list), dtype=float)
-
+                    print('test')
                     # Loop over locations of stations
                     for location in location_list:
                         # Get the data corresponding to the pixel locations
@@ -110,7 +110,7 @@ def prepare_radar_data(radar_data_path, year, noise_threshold, hail_threshold, s
                         pixel_y = int(location[1])
                         value = df_data.iloc[pixel_y, pixel_x]
                         extract_data[location_list.index(location)] = value
-                    print('test')
+
                     # Store in dataframe
                     radar_df.loc[len(radar_df)] = extract_data
 
