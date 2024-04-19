@@ -7,7 +7,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-def prepare_radar_data(radar_data_path, year, noise_threshold, hail_threshold, save_path, months=None, days=None, temporal_res='6min'):
+def prepare_radar_data(radar_data_path, year, noise_threshold, hail_threshold, save_path, months=None, days=None, temporal_res='6min', img_res=800):
     '''
     Method to load radar data from csv files.
 
@@ -33,7 +33,7 @@ def prepare_radar_data(radar_data_path, year, noise_threshold, hail_threshold, s
     # Loop over stations and pixel coordinates
     for (id, pixel_y, pixel_x) in location_list:
         # Check if both pixels inside region
-        if pixel_y >= 0 and pixel_x >= 0:
+        if 0 <= pixel_y < img_res and 0 <= pixel_x < img_res:
             # Store stations inside region
             location_list_filtered.append((id, pixel_y, pixel_x))
     # Update location list
