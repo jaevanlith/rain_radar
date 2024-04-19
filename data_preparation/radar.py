@@ -137,7 +137,7 @@ def prepare_radar_data(radar_data_path, year, noise_threshold, hail_threshold, s
         radar_df = radar_df.replace(1,0)
 
         # Average over hours
-        radar_df = radar_df.resample('6min').mean()
+        radar_df = radar_df.resample(temporal_res).mean()
 
         # Remove duplicates
         radar_df = radar_df.loc[:,~radar_df.columns.duplicated()].copy()
